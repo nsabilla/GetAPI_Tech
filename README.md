@@ -26,4 +26,4 @@ flutter pub get
 
 ## Output Untuk Desain Berita Ini
 
-![output](img/output.png)
+![output](project_uas_najwa/img/output.png)
