@@ -1,10 +1,13 @@
+// import paket
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:project_uas_najwa/model.dart';
 
+// method void sebagai titik masuk untuk aplikasi Flutter, lalu runApp() digunakan untuk menjalankan aplikasi Flutter dengan menginisialisasi MyApp
 void main() => runApp(MyApp());
 
+// class MyApp adalah class main 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
@@ -20,23 +23,27 @@ class MyApp extends StatelessWidget {
   }
 }
 
+// class HomePage adalah class yang mewakili class main
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
 
   @override
-  HomePageState createState() => HomePageState();
+  HomePageState createState() => HomePageState(); // class HomePageState adalah class yang memegang keadaan halaman dan mengatur perubahan-perubahan itu
 }
 
 class HomePageState extends State<HomePage> {
   List<dynamic> techData = [];
   int currentPage = 1;
 
+// method initState merupakan method dalam class HomePageState yang dipanggil ketika halaman dipasang untuk pertama kalinya
   @override
   void initState() {
     super.initState();
+    // method getData dipanggil untuk memperoleh data berita teknologi
     getData();
   }
 
+// fetchdata digunakan untuk melakukan permintaan HTTP dan URL tertentu
   Future fetchData() async {
     final response = await http.get(Uri.parse(
         'https://the-lazy-media-api.vercel.app/api/tech?page=$currentPage'));
@@ -51,8 +58,10 @@ class HomePageState extends State<HomePage> {
     }
   }
 
+  // method getData digunakan untuk memeproleh data berita dengan memanggil method fetchData()
   getData() async {
     List<News> news = await fetchData();
+    // setelah data diperoleh, method setState dipanggil untuk memperbarui keadaan halaman dengan data yang diperoleh
     setState(() {
       techData = news;
     });
@@ -86,8 +95,8 @@ class HomePageState extends State<HomePage> {
               // )),
               SliverPadding(
                 padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
-                sliver: SliverList(
-                  delegate: SliverChildBuilderDelegate(
+                sliver: SliverList( // salah satu widget dalam CustomScrollView
+                  delegate: SliverChildBuilderDelegate( // SliverChildBuilderDelegate digunakan untuk membangun daftar item sesuai dengan panjang techData. Setiap item menggunakan widget Card dan ListTile untuk menampilkan informasi berita
                     (BuildContext context, int index) {
                       return Card(
                           // color: Colors.amberAccent,
@@ -148,7 +157,7 @@ class HomePageState extends State<HomePage> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      IconButton(
+                      IconButton( // IconButton untuk tombol yang mengandung icon yang merespon sentuhan. Tombol ini digunakan untuk berpindah ke halam sebelumnya dengan mengurangi nomor halaman saat diklik
                         onPressed: currentPage > 1
                             ? () => {
                                   techData.clear(),
